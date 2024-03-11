@@ -8,6 +8,9 @@ import { qwikCity } from "@builder.io/qwik-city/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import pkg from "./package.json";
 
+import { browserslistToTargets } from "lightningcss";
+import browserslist from "browserslist";
+
 const { dependencies = {}, devDependencies = {} } = pkg as any as {
   dependencies: Record<string, string>;
   devDependencies: Record<string, string>;
@@ -45,12 +48,23 @@ export default defineConfig(({ command, mode }): UserConfig => {
         // Don't cache the server response in dev mode
         "Cache-Control": "public, max-age=0",
       },
+      host: "0.0.0.0",
+      port: 3000,
     },
     preview: {
       headers: {
         // Do cache the server response in preview (non-adapter production build)
         "Cache-Control": "public, max-age=600",
       },
+    },
+    css: {
+      transformer: "lightningcss",
+      lightningcss: {
+        targets: browserslistToTargets(browserslist(">= 0.25%")),
+      },
+    },
+    build: {
+      cssMinify: "lightningcss",
     },
   };
 });

@@ -57,14 +57,5 @@ export default defineConfig(({ command, mode }): UserConfig => {
         "Cache-Control": "public, max-age=600",
       },
     },
-    css: {
-      transformer: "lightningcss",
-      lightningcss: {
-        targets: browserslistToTargets(browserslist(">= 0.25%")),
-      },
-    },
-    build: {
-      cssMinify: "lightningcss",
-    },
   };
 });

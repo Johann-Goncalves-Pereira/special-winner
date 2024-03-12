@@ -1,0 +1,144 @@
+@use "sass:math";
+
+/**
+ * Tailwind CSS imports
+ * View the full documentation at https://tailwindcss.com
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .rounded-gradient {
+    $color-do-not-matter: Chartreuse;
+    $backdrop-filter: 0.5rem;
+    $mask:
+      linear-gradient($color-do-not-matter 0 0) content-box,
+      linear-gradient($color-do-not-matter 0 0);
+
+    position: relative;
+
+    @supports (mask: $mask) and (backdrop-filter: $backdrop-filter) {
+      // backdrop-filter: $backdrop-filter;
+      background-color: theme("colors.transparent");
+    }
+    @supports not (mask: $mask) {
+      background-color: theme("colors.surface.950");
+    }
+
+    &:hover,
+    &:active,
+    &:focus-visible,
+    &:focus-within {
+      &::before {
+        --bg-position-x_: 0;
+      }
+    }
+
+    &::before {
+      $background-size-plus: 100%;
+
+      $background-image: linear-gradient(
+        135deg,
+        theme("colors.surface.400"),
+        theme("colors.surface.700") #{$background-size-plus * 0.5}
+      );
+
+      position: absolute;
+      z-index: calc(theme("zIndex.10") * -1);
+      transition-duration: 300ms;
+
+      transition-property: background-position;
+      transition-timing-function: ease-in-out;
+      inset: 0;
+      border-radius: inherit;
+
+      background-image: $background-image;
+      background-position: var(--bg-position-x_, 75%)
+        calc(var(--bg-position-x_, 75%) * 0.5);
+      background-size: 100% + $background-size-plus;
+
+      padding: theme("padding.px");
+
+      content: "";
+
+      @supports (mask: $mask) {
+        mask: $mask;
+        mask-composite: exclude;
+      }
+
+      @supports not (background-image: $background-image) {
+        background-color: theme("colors.surface.600");
+      }
+    }
+  }
+
+  .material-symbols-rounded {
+    font-size: inherit;
+    font-variation-settings:
+      "FILL" 1,
+      "wght" 700,
+      "GRAD" 200,
+      "opsz" 24;
+  }
+}
+
+:focus-visible {
+  outline: theme("colors.accent.600") solid 3px;
+  outline-offset: -1px;
+}
+
+:where(img) {
+  vertical-align: middle;
+
+  shape-margin: 0.75rem;
+  background-size: cover;
+
+  background-repeat: no-repeat;
+  max-width: 100%;
+  height: auto;
+  font-style: italic;
+  font-weight: 900;
+}
+
+/* clears the ‘X’ from Internet Explorer */
+input[type="search"]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type="search"]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+/* clears the ‘X’ from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.debug {
+  opacity: 1 !important;
+  outline-color: hsl(0, 100%, 50%, 0.5);
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: -1px;
+
+  $base: "";
+  @for $i from 1 through 16 {
+    $base: $base + ">*";
+
+    #{$base} {
+      $hue: $i * 45;
+      $opacity: 1 - math.div($i * 100, 16) * 0.01;
+
+      outline-color: hsl(#{$hue} 100% 50% / #{$opacity});
+      outline-style: dotted;
+      outline-width: 1px;
+      outline-offset: -1px;
+    }
+  }
+}

@@ -36,7 +36,7 @@ export const SidebarLeft = component$(() => {
 export const SidebarRight = component$(() => {
 	const state = useStore({
 		show: false,
-		toggle: true,
+		toggle: false,
 	});
 
 	return (

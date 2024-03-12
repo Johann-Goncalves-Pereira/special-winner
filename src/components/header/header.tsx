@@ -20,11 +20,10 @@ export default component$(() => {
 		showMenu: false,
 	});
 
-	useStylesScoped$(":hover{transition-delay:700ms;}");
 	return (
 		<>
 			<header
-				class="relative z-10 col-start-2 row-start-1 -translate-y-1.5
+				class="relative z-10 col-start-1 col-end-4 row-start-1 grid -translate-y-1.5
 				before:absolute before:-left-3 before:-right-3 before:h-3 before:content
 				[&>div]:focus-within:-translate-y-0 [&>div]:hover:-translate-y-0"
 			>

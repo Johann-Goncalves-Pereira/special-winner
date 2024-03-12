@@ -3,7 +3,7 @@ import type { RequestHandler } from "@builder.io/qwik-city";
 import Header from "~/components/header/header";
 
 import Background from "/public/background.jpg?jsx";
-import { Sidebar, Side } from "~/components/sidebar/sidebar";
+import { SidebarLeft, SidebarRight } from "~/components/sidebar/sidebar";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
 	// Control caching for this request for best performance and to reduce hosting costs:
@@ -33,23 +33,18 @@ export default component$(() => {
 		},
 	});
 
-
 	return (
 		<>
 			{/* top */}
 			<Header />
 			{/* center */}
-			<Sidebar
-				side="left"
-			/>
+			<SidebarLeft />
 			<main class="rounded-gradient col-start-2 row-start-2 grid gap-3 rounded-lg backdrop-blur">
 				<section class="" aria-labelledby="main-section">
 					<Slot />
 				</section>
 			</main>
-			<Sidebar
-				side="right"
-			/>
+			<SidebarRight />
 			{/* bottom */}
 			<footer class=" relative col-start-2 row-start-3 translate-y-1.5 rounded-lg">
 				<div class="absolute -left-3 -right-3 bottom-0 top-auto h-3"></div>

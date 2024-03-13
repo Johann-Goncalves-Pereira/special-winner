@@ -4,6 +4,7 @@ import Header from "~/components/header/header";
 
 import Background from "/public/background.jpg?jsx";
 import { SidebarLeft, SidebarRight } from "~/components/sidebar/sidebar";
+import Footer from "~/components/footer/footer";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
 	// Control caching for this request for best performance and to reduce hosting costs:
@@ -16,23 +17,7 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 	});
 };
 
-interface ShowState {
-	showFooter: boolean;
-	showSidebar: {
-		left: boolean;
-		right: boolean;
-	};
-}
-
 export default component$(() => {
-	const state = useStore<ShowState>({
-		showFooter: true,
-		showSidebar: {
-			left: false,
-			right: false,
-		},
-	});
-
 	return (
 		<>
 			{/* top */}
@@ -46,9 +31,7 @@ export default component$(() => {
 			</main>
 			<SidebarRight />
 			{/* bottom */}
-			<footer class=" relative col-start-2 row-start-3 translate-y-1.5 rounded-lg">
-				<div class="absolute -left-3 -right-3 bottom-0 top-auto h-3"></div>
-			</footer>
+			<Footer />
 			<Background
 				class="fixed inset-0 -z-50 h-full w-full opacity-20"
 				aria-hidden
